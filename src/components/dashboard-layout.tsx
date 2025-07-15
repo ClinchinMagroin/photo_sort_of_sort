@@ -43,9 +43,13 @@ const Logo = () => (
     </div>
 );
 
+interface DashboardLayoutProps {
+    children: React.ReactNode;
+    activePage: string;
+    setActivePage: (page: string) => void;
+}
 
-export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [active, setActive] = React.useState('Library');
+export function DashboardLayout({ children, activePage, setActivePage }: DashboardLayoutProps) {
   
   return (
     <SidebarProvider>
@@ -58,7 +62,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <SidebarGroupLabel>Main</SidebarGroupLabel>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => setActive('Library')} isActive={active === 'Library'} tooltip="Library">
+                <SidebarMenuButton onClick={() => setActivePage('Library')} isActive={activePage === 'Library'} tooltip="Library">
                   <LayoutGrid />
                   Library
                 </SidebarMenuButton>
@@ -70,13 +74,13 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
              <SidebarGroupLabel>Sort by</SidebarGroupLabel>
             <SidebarMenu>
                <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => setActive('Date')} isActive={active === 'Date'} tooltip="Date">
+                <SidebarMenuButton onClick={() => setActivePage('Date')} isActive={activePage === 'Date'} tooltip="Date">
                   <Calendar />
                   Date
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => setActive('Location')} isActive={active === 'Location'} tooltip="Location">
+                <SidebarMenuButton onClick={() => setActivePage('Location')} isActive={activePage === 'Location'} tooltip="Location">
                   <MapPin />
                   Location
                 </SidebarMenuButton>
@@ -88,19 +92,19 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <SidebarGroupLabel>Smart Albums</SidebarGroupLabel>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => setActive('Summer')} isActive={active === 'Summer'} tooltip="Last Summer">
+                <SidebarMenuButton onClick={() => setActivePage('Summer')} isActive={activePage === 'Summer'} tooltip="Last Summer">
                   <Sun />
                   Last Summer
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => setActive('Family')} isActive={active === 'Family'} tooltip="Family Photos">
+                <SidebarMenuButton onClick={() => setActivePage('Family')} isActive={activePage === 'Family'} tooltip="Family Photos">
                   <Users />
                   Family Photos
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => setActive('Camera')} isActive={active === 'Camera'} tooltip="From my Canon">
+                <SidebarMenuButton onClick={() => setActivePage('Camera')} isActive={activePage === 'Camera'} tooltip="From my Canon">
                   <Camera />
                   From my Canon
                 </SidebarMenuButton>
@@ -112,13 +116,13 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <SidebarGroupLabel>Manage</SidebarGroupLabel>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => setActive('Rules')} isActive={active === 'Rules'} tooltip="Custom Rules">
+                <SidebarMenuButton onClick={() => setActivePage('Rules')} isActive={activePage === 'Rules'} tooltip="Custom Rules">
                   <GanttChartSquare />
                   Custom Rules
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => setActive('Settings')} isActive={active === 'Settings'} tooltip="Settings">
+                <SidebarMenuButton onClick={() => setActivePage('Settings')} isActive={activePage === 'Settings'} tooltip="Settings">
                   <Settings />
                   Settings
                 </SidebarMenuButton>

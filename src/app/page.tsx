@@ -1,6 +1,10 @@
+'use client';
+
+import { useState } from 'react';
 import { DashboardLayout } from '@/components/dashboard-layout';
 import { PhotoGrid } from '@/components/photo-grid';
 import { AITagger } from '@/components/ai-tagger';
+import { SettingsPage } from '@/components/settings-page';
 import type { Photo } from '@/lib/types';
 
 const samplePhotos: Photo[] = [
@@ -12,16 +16,30 @@ const samplePhotos: Photo[] = [
   { id: '6', src: 'https://placehold.co/600x400.png', title: 'Street Art', date: '2023-11-25', tags: ['art', 'graffiti', 'urban', 'wall'], aiHint: 'street art' },
 ];
 
-export default function Home() {
+function LibraryPage() {
   return (
-    <DashboardLayout>
-      <div className="flex flex-col gap-8">
-        <AITagger />
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight mb-4">Your Library</h2>
-          <PhotoGrid photos={samplePhotos} />
-        </div>
+    <div className="flex flex-col gap-8">
+      <AITagger />
+      <div>
+        <h2 className="text-2xl font-bold tracking-tight mb-4">Your Library</h2>
+        <PhotoGrid photos={samplePhotos} />
       </div>
+    </div>
+  );
+}
+
+export default function Home() {
+  const [activePage, setActivePage] = useState('Library');
+
+  return (
+    <DashboardLayout activePage={activePage} setActivePage={setActivePage}>
+      {activePage === 'Library' && <LibraryPage />}
+      {activePage === 'Settings' && <SettingsPage />}
+      {activePage !== 'Library' && activePage !== 'Settings' && (
+        <div className="flex items-center justify-center h-full">
+            <h1 className="text-2xl text-muted-foreground">This page is not yet available.</h1>
+        </div>
+      )}
     </DashboardLayout>
   );
 }
