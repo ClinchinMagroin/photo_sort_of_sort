@@ -8,6 +8,7 @@ import { AITagger } from '@/components/ai-tagger';
 import { SettingsPage } from '@/components/settings-page';
 import { DuplicatesPage } from '@/components/duplicates-page';
 import type { Photo } from '@/lib/types';
+import { PhotoDetailDialog } from '@/components/photo-detail-dialog';
 
 const samplePhotos: Photo[] = [
   { id: '1', src: 'https://placehold.co/600x400.png', title: 'Mountain Vista', date: '2023-08-15', tags: ['mountain', 'nature', 'sky', 'landscape'], aiHint: 'mountain landscape' },
@@ -18,13 +19,13 @@ const samplePhotos: Photo[] = [
   { id: '6', src: 'https://placehold.co/600x400.png', title: 'Street Art', date: '2023-11-25', tags: ['art', 'graffiti', 'urban', 'wall'], aiHint: 'street art' },
 ];
 
-function LibraryPage() {
+function LibraryPage({ onPhotoClick }: { onPhotoClick: (photo: Photo) => void }) {
   return (
     <div className="flex flex-col gap-8">
       <AITagger />
       <div>
         <h2 className="text-2xl font-bold tracking-tight mb-4">Your Library</h2>
-        <PhotoGrid photos={samplePhotos} />
+        <PhotoGrid photos={samplePhotos} onPhotoClick={onPhotoClick} />
       </div>
     </div>
   );
@@ -32,11 +33,20 @@ function LibraryPage() {
 
 export default function Home() {
   const [activePage, setActivePage] = useState('Library');
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+
+  const handlePhotoClick = (photo: Photo) => {
+    setSelectedPhoto(photo);
+  };
+
+  const handleDialogClose = () => {
+    setSelectedPhoto(null);
+  };
 
   const renderContent = () => {
     switch (activePage) {
       case 'Library':
-        return <LibraryPage />;
+        return <LibraryPage onPhotoClick={handlePhotoClick} />;
       case 'Settings':
         return <SettingsPage />;
       case 'Duplicates':
@@ -53,6 +63,13 @@ export default function Home() {
   return (
     <DashboardLayout activePage={activePage} setActivePage={setActivePage}>
       {renderContent()}
+      {selectedPhoto && (
+        <PhotoDetailDialog
+          photo={selectedPhoto}
+          isOpen={!!selectedPhoto}
+          onClose={handleDialogClose}
+        />
+      )}
     </DashboardLayout>
   );
 }

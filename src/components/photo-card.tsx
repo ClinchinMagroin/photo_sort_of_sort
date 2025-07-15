@@ -6,11 +6,15 @@ import { Calendar } from 'lucide-react';
 
 interface PhotoCardProps {
   photo: Photo;
+  onClick: () => void;
 }
 
-export function PhotoCard({ photo }: PhotoCardProps) {
+export function PhotoCard({ photo, onClick }: PhotoCardProps) {
   return (
-    <Card className="overflow-hidden group transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+    <Card 
+      className="overflow-hidden group transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+      onClick={onClick}
+    >
       <CardContent className="p-0">
         <div className="relative aspect-video">
           <Image
