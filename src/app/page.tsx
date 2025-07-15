@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -5,6 +6,7 @@ import { DashboardLayout } from '@/components/dashboard-layout';
 import { PhotoGrid } from '@/components/photo-grid';
 import { AITagger } from '@/components/ai-tagger';
 import { SettingsPage } from '@/components/settings-page';
+import { DuplicatesPage } from '@/components/duplicates-page';
 import type { Photo } from '@/lib/types';
 
 const samplePhotos: Photo[] = [
@@ -31,15 +33,26 @@ function LibraryPage() {
 export default function Home() {
   const [activePage, setActivePage] = useState('Library');
 
+  const renderContent = () => {
+    switch (activePage) {
+      case 'Library':
+        return <LibraryPage />;
+      case 'Settings':
+        return <SettingsPage />;
+      case 'Duplicates':
+        return <DuplicatesPage />;
+      default:
+        return (
+          <div className="flex items-center justify-center h-full">
+            <h1 className="text-2xl text-muted-foreground">This page is not yet available.</h1>
+          </div>
+        );
+    }
+  };
+
   return (
     <DashboardLayout activePage={activePage} setActivePage={setActivePage}>
-      {activePage === 'Library' && <LibraryPage />}
-      {activePage === 'Settings' && <SettingsPage />}
-      {activePage !== 'Library' && activePage !== 'Settings' && (
-        <div className="flex items-center justify-center h-full">
-            <h1 className="text-2xl text-muted-foreground">This page is not yet available.</h1>
-        </div>
-      )}
+      {renderContent()}
     </DashboardLayout>
   );
 }

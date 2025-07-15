@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -32,6 +33,7 @@ import {
   GanttChartSquare,
   Search,
   Image as ImageIcon,
+  Copy,
 } from 'lucide-react';
 
 const Logo = () => (
@@ -115,6 +117,12 @@ export function DashboardLayout({ children, activePage, setActivePage }: Dashboa
            <SidebarGroup>
             <SidebarGroupLabel>Manage</SidebarGroupLabel>
             <SidebarMenu>
+               <SidebarMenuItem>
+                <SidebarMenuButton onClick={() => setActivePage('Duplicates')} isActive={activePage === 'Duplicates'} tooltip="Duplicates">
+                  <Copy />
+                  Duplicates
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton onClick={() => setActivePage('Rules')} isActive={activePage === 'Rules'} tooltip="Custom Rules">
                   <GanttChartSquare />
@@ -150,7 +158,7 @@ export function DashboardLayout({ children, activePage, setActivePage }: Dashboa
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input placeholder="Search photos..." className="pl-9" />
           </div>
-          <Button variant="primary" className="ml-4">
+          <Button variant="primary" className="ml-4" onClick={() => setActivePage('Duplicates')}>
             Find Duplicates
           </Button>
         </header>
